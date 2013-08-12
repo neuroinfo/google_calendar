@@ -44,11 +44,13 @@ module Google
     # send a request to google.
     #
     def send(uri, method, content = '', redirect_count = 10)
+      proxy_addr = "http://proxy.swmed.edu" 
+      proxy_port = "3128"
       raise HTTPTooManyRedirections if redirect_count == 0
 
       set_session_if_necessary(uri)
-
-      http = (uri.scheme == 'https' ? Net::HTTPS.new(uri.host, uri.inferred_port) : Net::HTTP.new(uri.host, uri.inferred_port))
+      
+      http = (uri.scheme == 'https' ? Net::HTTPS::Proxy(proxy_addr, proxy_port).new(uri.host, uri.inferred_port) : Net::HTTP::Proxy(proxy_addr, proxy_port).new(uri.host, uri.inferred_port))
       response =  http.request(build_request(uri, method, content))
 
       # recurse if necessary.
