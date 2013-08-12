@@ -44,7 +44,7 @@ module Google
     # send a request to google.
     #
     def send(uri, method, content = '', redirect_count = 10)
-      proxy_addr = "http://proxy.swmed.edu" 
+      proxy_addr = "proxy.swmed.edu" 
       proxy_port = "3128"
       raise HTTPTooManyRedirections if redirect_count == 0
 
